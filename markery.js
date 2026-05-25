@@ -1,3 +1,4 @@
+//jsdoc -c jsdoc.json README.md markery.js
 
 /**
  * APIs being create by Mr Marker. Those APIs or methods are usable if
