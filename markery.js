@@ -1,3 +1,4 @@
+
 /**
  * APIs being create by Mr Marker. Those APIs or methods are usable if
  * Library Scripts was in Custom NPCs global folder was there.
@@ -31,71 +32,6 @@ class APIs {
         return null;
     }
     /**
-     * Going to be removed
-     * @param {*} source 
-     * @param {*} NPC 
-     * @param {*} damage 
-     */
-    tempDataDamageSource(source, NPC, damage) {
-    var name = source.getName();
-
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
-
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var tempDataDir = new FileImport(dataDir, "TempData");
-
-    if (!tempDataDir.exists()) {
-        tempDataDir.mkdirs();
-    }
-
-    var file = new FileImport(tempDataDir, NPC.getDisplay().getName() + "_TempData.json");
-
-    if (!file.exists()) {
-        file.createNewFile();
-    }
-
-    // --- Read file ---
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {
-        // ignore read errors, fallback to empty
-    }
-
-    // --- Parse or initialize ---
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
-            data = { players: {} };
-        }
-    } catch (err) {
-        // corrupted JSON fallback
-        data = { players: {} };
-    }
-
-    // Ensure structure exists
-    if (!data.players) {
-        data.players = {};
-    }
-
-    if (data.players[name]) {
-        data.players[name] += damage;
-    } else {
-        data.players[name] = damage;
-    }
-    // --- Write back ---
-    var writer = new FileWriterImport(file);
-    writer.write(JSON.stringify(data, null, 2));
-    writer.close();
-}
-    /**
      * Save data as json file in specific Dir and name.
      * @param {string} variable The variable name.
      * @param {any} Second The equal to. Could be Boolean or String or Integere (Note that if you input integer it might add so you need to minus it first.)
@@ -103,50 +39,50 @@ class APIs {
      * @param {string} Dir The name of the Directory inside Data folder.
      */
     saveData(first, second, source, Dir) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
 
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var otherDataDir = new FileImport(dataDir, Dir);
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+        var otherDataDir = new FileImport(dataDir, Dir);
 
-    if (!otherDataDir.exists()) {
-        otherDataDir.mkdirs();
-    }
+        if (!otherDataDir.exists()) {
+            otherDataDir.mkdirs();
+        }
 
-    var file = new FileImport(otherDataDir, source + ".json");
+        var file = new FileImport(otherDataDir, source + ".json");
 
-    if (!file.exists()) {
-        file.createNewFile();
-    }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
 
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {
-        print(err);
-    }
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {
+            print(err);
+        }
 
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
+        var data;
+        try {
+            if (content && content.trim().length > 0) {
+                data = JSON.parse(content);
+            } else {
+                data = {};
+            }
+        } catch (err) {
             data = {};
         }
-    } catch (err) {
-        data = {};
-    }
-        data[first] = second;
+            data[first] = second;
 
-    // --- Write back ---
-    var writer = new FileWriterImport(file);
-    writer.write(JSON.stringify(data, null, 2));
-    writer.close();
-}   
+        // --- Write back ---
+        var writer = new FileWriterImport(file);
+        writer.write(JSON.stringify(data, null, 2));
+        writer.close();
+    }   
     /**
      * Read the data that been saved in the specific file.
      * @param {string} variable The variable name.
@@ -155,46 +91,46 @@ class APIs {
      * @returns {any} Return anything that been mentioned in the variable.
      */
     readSavedDataVar(first, source, Dir) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
 
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var otherDataDir = new FileImport(dataDir, Dir);
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+        var otherDataDir = new FileImport(dataDir, Dir);
 
-    if (!otherDataDir.exists()) {
-        otherDataDir.mkdirs();
-    }
+        if (!otherDataDir.exists()) {
+            otherDataDir.mkdirs();
+        }
 
-    var file = new FileImport(otherDataDir, source + ".json");
+        var file = new FileImport(otherDataDir, source + ".json");
 
-    if (!file.exists()) {
-        return null;
-    }
+        if (!file.exists()) {
+            return null;
+        }
 
-    // --- Read file ---
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {
-        // ignore read errors, fallback to empty
-    }
+        // --- Read file ---
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {
+            // ignore read errors, fallback to empty
+        }
 
-    // --- Parse or initialize ---
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
+        // --- Parse or initialize ---
+        var data;
+        try {
+            if (content && content.trim().length > 0) {
+                data = JSON.parse(content);
+            } else {
+                data = {};
+            }
+        } catch (err) {
             data = {};
         }
-    } catch (err) {
-        data = {};
-    }
-    return data[first];
+        return data[first];
 }   
     /**
      * Read the array of the specific variable that been mentioned in the specific file.
@@ -204,49 +140,49 @@ class APIs {
      * @returns {any[]} Return array of anything that been mentioned in the variable.
      */
     readSavedDataArray(first, source, Dir) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
 
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var anotherDataDir = new FileImport(dataDir, Dir);
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+        var anotherDataDir = new FileImport(dataDir, Dir);
 
-    if (!anotherDataDir.exists()) {
-        anotherDataDir.mkdirs();
-    }
+        if (!anotherDataDir.exists()) {
+            anotherDataDir.mkdirs();
+        }
 
-    var file = new FileImport(anotherDataDir, source + ".json");
+        var file = new FileImport(anotherDataDir, source + ".json");
 
-    if (!file.exists()) {
-        return null;
-    }
+        if (!file.exists()) {
+            return null;
+        }
 
-    // --- Read file ---
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {
-        // ignore read errors, fallback to empty
-    }
+        // --- Read file ---
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {
+            // ignore read errors, fallback to empty
+        }
 
-    var leaderboard = [];
+        var leaderboard = [];
 
-    for (var name in data.players) {
-        leaderboard.push({
-            name: name,
-            damage: data.players[name]
+        for (var name in data.players) {
+            leaderboard.push({
+                name: name,
+                damage: data.players[name]
+            });
+        }
+
+        // --- Sort highest → lowest ---
+        leaderboard.sort(function(a, b) {
+            return b.damage - a.damage;
         });
+        return leaderboard;
     }
-
-    // --- Sort highest → lowest ---
-    leaderboard.sort(function(a, b) {
-        return b.damage - a.damage;
-    });
-    return leaderboard;
-}
     /**
      * Boolean for specific data/variable in specific file.
      * @param {string} variable The variable name.
@@ -255,152 +191,152 @@ class APIs {
      * @returns {boolean} Return if the variable or data exist in the specific file.
      */
     hasSavedDataVar(first, source, Dir) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
 
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var anotherDataDir = new FileImport(dataDir, Dir);
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+        var anotherDataDir = new FileImport(dataDir, Dir);
 
-    if (!anotherDataDir.exists()) {
-        anotherDataDir.mkdirs();
-    }
+        if (!anotherDataDir.exists()) {
+            anotherDataDir.mkdirs();
+        }
 
-    var file = new FileImport(anotherDataDir, source + ".json");
+        var file = new FileImport(anotherDataDir, source + ".json");
 
-    if (!file.exists()) {
-        return false;
-    }
+        if (!file.exists()) {
+            return false;
+        }
 
-    // --- Read file ---
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {
-        // ignore read errors, fallback to empty
-    }
+        // --- Read file ---
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {
+            // ignore read errors, fallback to empty
+        }
 
-    // --- Parse or initialize ---
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
+        // --- Parse or initialize ---
+        var data;
+        try {
+            if (content && content.trim().length > 0) {
+                data = JSON.parse(content);
+            } else {
+                data = {};
+            }
+        } catch (err) {
             data = {};
         }
-    } catch (err) {
-        data = {};
-    }
-    return data[first] !== undefined;
-}   
+        return data[first] !== undefined;
+    }   
     /**
      * Getting the player's raw UUID from https://api.mojang.com/users/profiles/minecraft/
      * @param {String} name Name of the player.
      * @returns {string} The UUID of the player.
      */
     getPlayerUUIDFromString(name) {
-    try {
-        var url = "https://api.mojang.com/users/profiles/minecraft/" + name;
+        try {
+            var url = "https://api.mojang.com/users/profiles/minecraft/" + name;
 
-        var con = new java.net.URL(url).openConnection();
-        con.requestMethod = "GET";
+            var con = new java.net.URL(url).openConnection();
+            con.requestMethod = "GET";
 
-        var reader = new java.io.BufferedReader(
-            new java.io.InputStreamReader(con.getInputStream())
-        );
+            var reader = new java.io.BufferedReader(
+                new java.io.InputStreamReader(con.getInputStream())
+            );
 
-        var response = "";
-        var line;
+            var response = "";
+            var line;
 
-        while ((line = reader.readLine()) != null) {
-            response += line;
+            while ((line = reader.readLine()) != null) {
+                response += line;
+            }
+
+            reader.close();
+
+            var json = JSON.parse(response);
+
+            return json.id; // UUID string
+        } catch (err) {
+            return null;
         }
-
-        reader.close();
-
-        var json = JSON.parse(response);
-
-        return json.id; // UUID string
-    } catch (err) {
-        return null;
     }
-}
     /**
      * Method to pull the player name from UUID using https://sessionserver.mojang.com/session/minecraft/profile/
      * @param {string} rawUUID The raw UUID (No Dashs or any extra simples!);
      * @returns {string} The player name.
      */
     getPlayerNameFromUUID(uuid) {
-    try {
-        var url = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid;
+        try {
+            var url = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid;
 
-        var con = new java.net.URL(url).openConnection();
-        con.requestMethod = "GET";
+            var con = new java.net.URL(url).openConnection();
+            con.requestMethod = "GET";
 
-        var reader = new java.io.BufferedReader(
-            new java.io.InputStreamReader(con.getInputStream())
-        );
+            var reader = new java.io.BufferedReader(
+                new java.io.InputStreamReader(con.getInputStream())
+            );
 
-        var response = "";
-        var line;
+            var response = "";
+            var line;
 
-        while ((line = reader.readLine()) != null) {
-            response += line;
+            while ((line = reader.readLine()) != null) {
+                response += line;
+            }
+
+            reader.close();
+
+            var json = JSON.parse(response);
+
+            return json.name; // Name string
+        } catch (err) {
+            return null;
         }
-
-        reader.close();
-
-        var json = JSON.parse(response);
-
-        return json.name; // Name string
-    } catch (err) {
-        return null;
     }
-}
     /**
      * Pulling the opped players from the current server for security purposes. (Cannot be edited through saveData)
      * @returns {Array[]} Return an array with uuid, name, level, and bypassesPlayerLimit from the current server.
      */
     getOPedPlayers() {
-    var parentFile = API.getGlobalDir().getParent();
-    var file = new FileImport(parentFile, "ops.json");
+        var parentFile = API.getGlobalDir().getParent();
+        var file = new FileImport(parentFile, "ops.json");
 
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {}
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {}
 
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
+        var data;
+        try {
+            if (content && content.trim().length > 0) {
+                data = JSON.parse(content);
+            } else {
+                data = {};
+            }
+        } catch (err) {
             data = {};
         }
-    } catch (err) {
-        data = {};
-    }
-    var opArray = [];
-    if (Array.isArray(data)) {
-        for (var i = 0; i < data.length; i++) {
-            var player = data[i];
-            opArray.push({
-                uuid: player.uuid,
-                name: player.name,
-                level: player.level,
-                bypassesPlayerLimit: player.bypassesPlayerLimit
-            });
+        var opArray = [];
+        if (Array.isArray(data)) {
+            for (var i = 0; i < data.length; i++) {
+                var player = data[i];
+                opArray.push({
+                    uuid: player.uuid,
+                    name: player.name,
+                    level: player.level,
+                    bypassesPlayerLimit: player.bypassesPlayerLimit
+                });
+            }
+        } else {
+            print("Error: ops.json does not contain a valid array.");
         }
-    } else {
-        print("Error: ops.json does not contain a valid array.");
+        return opArray;
     }
-    return opArray;
-}
     /**
      * Deleting the file from the specific folder.
      * @param {string} source Name of the file 
@@ -408,231 +344,190 @@ class APIs {
      * @returns {void} Remove the file.
      */
     removeSavedData(Name, dir) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
 
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var chosenDir = new FileImport(dataFoldDir, "dir");
-
-    if (!tempDataDir.exists()) {
-        return print("The directory " + dir + " does not exist.");
-    }
-
-    var file = new FileImport(chosenDir, Name + "_TempData.json");
-    if (!file.exists()) {
-        return print("The file " + Name + "_TempData.json does not exist.");
-    }
-    file.delete()
-}
-    /**
-     * Going to be removed
-     * @param {object} NPC 
-     * @returns {array}
-     */
-    tempDataDamageSourceRead(NPC) {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
-
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-    var tempDataDir = new FileImport(dataFoldDir, "TempData");
-
-    if (!tempDataDir.exists()) {
-        tempDataDir.mkdirs();
-    }
-
-    var file = new FileImport(tempDataDir, NPC.getDisplay().getName() + "_TempData.json");
-
-    if (!file.exists()) {
-        file.createNewFile();
-    }
-
-    // --- Read file ---
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {}
-
-    // --- Parse JSON ---
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
-            data = { players: {} };
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
         }
-    } catch (err) {
-        data = { players: {} };
+        var chosenDir = new FileImport(dataFoldDir, "dir");
+
+        if (!tempDataDir.exists()) {
+            return print("The directory " + dir + " does not exist.");
+        }
+
+        var file = new FileImport(chosenDir, Name + "_TempData.json");
+        if (!file.exists()) {
+            return print("The file " + Name + "_TempData.json does not exist.");
+        }
+        file.delete()
     }
-
-    if (!data.players) {
-        data.players = {};
-    }
-
-    // --- Convert to sortable array ---
-    var leaderboard = [];
-
-    for (var name in data.players) {
-        leaderboard.push({
-            name: name,
-            damage: data.players[name]
-        });
-    }
-
-    // --- Sort highest → lowest ---
-    leaderboard.sort(function(a, b) {
-        return b.damage - a.damage;
-    });
-    return leaderboard;
-}
     /**
      * Convert the player raw UUID with dashes like one.
      * @param {string} rawUUID The raw UUID of the player (No Dashes or extra simboles!)
      * @returns {string} Normal UUID
      */
     formatUUID(rawUUID) {
-    return rawUUID.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/, "$1-$2-$3-$4-$5");
-}
+        return rawUUID.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/, "$1-$2-$3-$4-$5");
+    }
     /**
      * Will convert the normal UUID with dashes to the raw UUID
      * @param {string} UUID The normal UUID of the player (The one with dashes)
      * @returns {string} Raw UUID
      */
     unformatUUID(UUID) {
-    return UUID.replaceAll("-", "");
-}
+        return UUID.replaceAll("-", "");
+    }
     /**
      * Return an array with Names and UUIDs that been loaded in the "PlayerData" file. Will skip and print any file couldn't get.
      * @returns {Array[]} Return the current files that been loaded from "PlayerData" with UUIDs and Names
      */
     getPlayersSavedNamesUUIDs() {
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
 
-    var anotherDataDir = new FileImport(dataDir, "Data");
-    if (!anotherDataDir.exists()) {
-        anotherDataDir.mkdirs();
-    }
+        var anotherDataDir = new FileImport(dataDir, "Data");
+        if (!anotherDataDir.exists()) {
+            anotherDataDir.mkdirs();
+        }
 
-    var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
+        var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
 
-    if (!file.exists()) {
-        file.createNewFile();
-    }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
 
-    var content = "";
-    try {
-        content = new java.lang.String(
-            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
-        );
-    } catch (err) {}
+        var content = "";
+        try {
+            content = new java.lang.String(
+                FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+            );
+        } catch (err) {}
 
-    var data;
-    try {
-        if (content && content.trim().length > 0) {
-            data = JSON.parse(content);
-        } else {
+        var data;
+        try {
+            if (content && content.trim().length > 0) {
+                data = JSON.parse(content);
+            } else {
+                data = { players: {} };
+            }
+        } catch (err) {
             data = { players: {} };
         }
-    } catch (err) {
-        data = { players: {} };
-    }
 
-    if (!data.players) {
-        data.players = {};
-    }
+        if (!data.players) {
+            data.players = {};
+        }
 
-    var arrayOfData = [];
+        var arrayOfData = [];
 
-    for (var name in data.players) {
-        arrayOfData.push({
-            name: name,
-            uuid: data.players[name]
+        for (var name in data.players) {
+            arrayOfData.push({
+                name: name,
+                uuid: data.players[name]
+            });
+        }
+
+        arrayOfData.sort(function(a, b) {
+            return b.damage - a.damage;
         });
+        return arrayOfData;
     }
-
-    arrayOfData.sort(function(a, b) {
-        return b.damage - a.damage;
-    });
-    return arrayOfData;
-}
     /**
      * Will update the SavedUUIDsNames and load all the names and UUIDs from each file. Will skip and print any file couldn't get.
      * @returns {void}
      */
     updateWorldNamedata(){
-    var baseDir = API.getGlobalDir();
-    var dataDir = new FileImport(baseDir, "Data");
-    if (!dataDir.exists()) {
-        dataDir.mkdirs();
-    }
-
-    var anotherDataDir = new FileImport(dataDir, "Data");
-    if (!anotherDataDir.exists()) {
-        anotherDataDir.mkdirs();
-    }
-
-    var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
-
-    if (!file.exists()) {
-        file.createNewFile();
-    }
-    var data = { players: {} };
-
-    if (!data) {
-        data.players = {};
-    }
-
-    var arrayOfData = [];
-
-    var playerDataDir = new FileImport(dataDir, "PlayerData");
-    var listFiles = playerDataDir.list();
-    try {   
-        for (var i = 0; i < listFiles.length; i++) {
-            var Filesget = listFiles[i];
-            var eachFile = new FileImport(playerDataDir, Filesget);
-            var UUID = eachFile.getName().replace(".json", "");
-
-            var contentnew = "";
-            try {
-                contentnew = new java.lang.String(
-                    FilesImport.readAllBytes(PathsImport.get(eachFile.getAbsolutePath()))
-                );
-            } catch (err) {}
-
-            var datanew;
-            try {
-                if (contentnew && contentnew.trim().length > 0) {
-                    datanew = JSON.parse(contentnew);
-                } else {
-                    datanew = {};
-                }
-            } catch (err) {
-                print(err);
-                continue;
-            }
-
-
-            var namep = datanew["name"];
-            if (namep == null || namep == undefined) {
-                print("Couldn't find name in: " + UUID + ".json");
-                continue;
-            }
-            data.players[namep] = UUID;
+        var baseDir = API.getGlobalDir();
+        var dataDir = new FileImport(baseDir, "Data");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
         }
-    } catch (err) {
-        return print(err);
+
+        var anotherDataDir = new FileImport(dataDir, "Data");
+        if (!anotherDataDir.exists()) {
+            anotherDataDir.mkdirs();
+        }
+
+        var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        var data = { players: {} };
+
+        if (!data) {
+            data.players = {};
+        }
+
+        var arrayOfData = [];
+
+        var playerDataDir = new FileImport(dataDir, "PlayerData");
+        var listFiles = playerDataDir.list();
+        try {   
+            for (var i = 0; i < listFiles.length; i++) {
+                var Filesget = listFiles[i];
+                var eachFile = new FileImport(playerDataDir, Filesget);
+                var UUID = eachFile.getName().replace(".json", "");
+
+                var contentnew = "";
+                try {
+                    contentnew = new java.lang.String(
+                        FilesImport.readAllBytes(PathsImport.get(eachFile.getAbsolutePath()))
+                    );
+                } catch (err) {}
+
+                var datanew;
+                try {
+                    if (contentnew && contentnew.trim().length > 0) {
+                        datanew = JSON.parse(contentnew);
+                    } else {
+                        datanew = {};
+                    }
+                } catch (err) {
+                    print(err);
+                    continue;
+                }
+
+
+                var namep = datanew["name"];
+                if (namep == null || namep == undefined) {
+                    print("Couldn't find name in: " + UUID + ".json");
+                    continue;
+                }
+                data.players[namep] = UUID;
+            }
+        } catch (err) {
+            return print(err);
+        }
+        var writer = new FileWriterImport(file);
+        writer.write(JSON.stringify(data, null, 2));
+        writer.close();
     }
-    var writer = new FileWriterImport(file);
-    writer.write(JSON.stringify(data, null, 2));
-    writer.close();
 }
+/**
+ * Required NPCs Scripts for solving issues NPC might do.
+ */
+class Required_NPCs{
+    /**
+     * Inserting Scripts into the NPC
+     * @param {object} NPC The NPC to set the Script
+     * @type {void}
+     */
+    insertCheckPlace(NPC) {
+    var arrayList = [];
+
+    var nbt = NPC.getEntityNbt();
+    var list1 = API.stringToNbt("{}");
+    list1.putString("Script", checkPlaceScriptContect);
+    
+    nbt.setBoolean("ScriptEnabled", true);
+    arrayList.push(list1);
+
+    nbt.setList("Scripts", arrayList);
+    npc.setEntityNbt(nbt);
+    }
 }
