@@ -1,0 +1,10 @@
+{
+    "opts": {
+        "template": "node_modules/docdash",
+        "destination": "./out"
+    },
+    "docdash": {
+        "search": true,
+        "collapse": true
+    }
+}
