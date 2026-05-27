@@ -1,4 +1,53 @@
-//jsdoc -c jsdoc.json README.md markery.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>markery.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIs.html">APIs</a><ul class='methods'><li data-type='method' style='display: none;'><a href="APIs.html#formatUUID">formatUUID</a></li><li data-type='method' style='display: none;'><a href="APIs.html#getOPedPlayers">getOPedPlayers</a></li><li data-type='method' style='display: none;'><a href="APIs.html#getPlayerNameFromUUID">getPlayerNameFromUUID</a></li><li data-type='method' style='display: none;'><a href="APIs.html#getPlayerSavedBalanceMethod">getPlayerSavedBalanceMethod</a></li><li data-type='method' style='display: none;'><a href="APIs.html#getPlayerUUIDFromString">getPlayerUUIDFromString</a></li><li data-type='method' style='display: none;'><a href="APIs.html#getPlayersSavedNamesUUIDs">getPlayersSavedNamesUUIDs</a></li><li data-type='method' style='display: none;'><a href="APIs.html#hasSavedDataVar">hasSavedDataVar</a></li><li data-type='method' style='display: none;'><a href="APIs.html#readSavedDataArray">readSavedDataArray</a></li><li data-type='method' style='display: none;'><a href="APIs.html#readSavedDataVar">readSavedDataVar</a></li><li data-type='method' style='display: none;'><a href="APIs.html#removeSavedData">removeSavedData</a></li><li data-type='method' style='display: none;'><a href="APIs.html#saveData">saveData</a></li><li data-type='method' style='display: none;'><a href="APIs.html#savePlayerBalanceMethod">savePlayerBalanceMethod</a></li><li data-type='method' style='display: none;'><a href="APIs.html#unformatUUID">unformatUUID</a></li><li data-type='method' style='display: none;'><a href="APIs.html#updateWorldNamedata">updateWorldNamedata</a></li></ul></li><li><a href="Required_NPCs.html">Required_NPCs</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Required_NPCs.html#insertCheckPlace">insertCheckPlace</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">markery.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//jsdoc -c jsdoc.json README.md markery.js
 
 /**
  * APIs being create by Mr Marker. Those APIs or methods are usable if
@@ -69,7 +118,7 @@ class APIs {
 
         var data;
         try {
-            if (content && content.trim().length > 0) {
+            if (content &amp;&amp; content.trim().length > 0) {
                 data = JSON.parse(content);
             } else {
                 data = {};
@@ -123,7 +172,7 @@ class APIs {
         // --- Parse or initialize ---
         var data;
         try {
-            if (content && content.trim().length > 0) {
+            if (content &amp;&amp; content.trim().length > 0) {
                 data = JSON.parse(content);
             } else {
                 data = {};
@@ -223,7 +272,7 @@ class APIs {
         // --- Parse or initialize ---
         var data;
         try {
-            if (content && content.trim().length > 0) {
+            if (content &amp;&amp; content.trim().length > 0) {
                 data = JSON.parse(content);
             } else {
                 data = {};
@@ -314,7 +363,7 @@ class APIs {
 
         var data;
         try {
-            if (content && content.trim().length > 0) {
+            if (content &amp;&amp; content.trim().length > 0) {
                 data = JSON.parse(content);
             } else {
                 data = {};
@@ -324,7 +373,7 @@ class APIs {
         }
         var opArray = [];
         if (Array.isArray(data)) {
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i &lt; data.length; i++) {
                 var player = data[i];
                 opArray.push({
                     uuid: player.uuid,
@@ -410,7 +459,7 @@ class APIs {
 
         var data;
         try {
-            if (content && content.trim().length > 0) {
+            if (content &amp;&amp; content.trim().length > 0) {
                 data = JSON.parse(content);
             } else {
                 data = { players: {} };
@@ -469,7 +518,7 @@ class APIs {
         var playerDataDir = new FileImport(dataDir, "PlayerData");
         var listFiles = playerDataDir.list();
         try {   
-            for (var i = 0; i < listFiles.length; i++) {
+            for (var i = 0; i &lt; listFiles.length; i++) {
                 var Filesget = listFiles[i];
                 var eachFile = new FileImport(playerDataDir, Filesget);
                 var UUID = eachFile.getName().replace(".json", "");
@@ -483,7 +532,7 @@ class APIs {
 
                 var datanew;
                 try {
-                    if (contentnew && contentnew.trim().length > 0) {
+                    if (contentnew &amp;&amp; contentnew.trim().length > 0) {
                         datanew = JSON.parse(contentnew);
                     } else {
                         datanew = {};
@@ -532,3 +581,34 @@ class Required_NPCs{
     npc.setEntityNbt(nbt);
     }
 }
+function alarty() {
+    
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Wed May 27 2026 17:44:44 GMT-0600 (Mountain Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

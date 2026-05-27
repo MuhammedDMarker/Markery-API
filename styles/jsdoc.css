@@ -1,0 +1,630 @@
+@import url('resources/fonts/dejavu.css');
+
+* {
+  box-sizing: border-box
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  color: #353833;
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a,
+a:active {
+  color: #4A6782;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #bb7a2a;
+}
+
+article a {
+  border-bottom: 1px solid #ddd;
+}
+
+article a:hover, article a:active {
+  border-bottom-color: #bb7a2a;
+}
+
+article .description a {
+    word-break: break-word;
+}
+
+p, ul, ol, blockquote {
+  margin-bottom: 1em;
+  line-height: 1.4em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+  color: #2c4557;
+  font-weight: bold;
+  margin: 0;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 1em 0 .5em;
+}
+
+h1.page-title {
+  font-size: 24px;
+  margin: 1em 30px;
+  line-height: 100%;
+  word-wrap: break-word;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 15px 0;
+  font-style: italic;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 1.2em 0 .3em;
+}
+
+h4 {
+  font-size: 15px;
+  margin: 1em 0 .2em;
+}
+
+.top-nav {
+    background-color: #4D7A97;
+    color: #FFFFFF;
+    float: left;
+    padding: 0;
+    width: 100%;
+    clear: right;
+    min-height: 2.8em;
+    padding-top: 10px;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+/* Styled to match Javadoc Method/Class Detail blocks */
+h4.name {
+  color: #353833;
+  background-color: #dee3e9;
+  border: 1px solid #d0d9e0;
+  box-shadow: none;
+  margin: 1.5em 0 6px -8px;
+  padding: 7px 5px;
+  font-size: 15px;
+}
+
+h4.name a {
+  color: #4A6782;
+}
+
+h4.name a:hover {
+  border-bottom-color: transparent;
+  color: #bb7a2a;
+}
+
+h5, .container-overview .subsection-title {
+  font-size: 14px;
+  margin: 8px 0 3px 0;
+}
+
+h6 {
+  font-size: 13px;
+  margin: 6px 0 3px 0;
+  font-style: italic;
+}
+
+.usertext h1 { font-size: 20px; margin: 2.5em 0 1em; }
+.usertext h2 { font-size: 18px; margin: 2em 0 0.5em; }
+.usertext h3 { font-size: 16px; margin: 1.5em 0 0; }
+.usertext h4 { font-size: 15px; margin: 0; }
+.usertext h5 { font-size: 14px; margin: 1em 0 0; color: #4E4E4E; }
+.usertext h6 { font-size: 13px; margin: 1em 0 0; font-style: italic; color: #4E4E4E; }
+
+tt, code, kbd, samp, pre {
+  font-family: 'DejaVu Sans Mono', monospace;
+  font-size: 14px;
+  background: transparent;
+}
+
+tt, code, kbd, samp{
+  padding: 1px 2px;
+}
+
+pre {
+  padding-bottom: 1em;
+}  
+
+.class-description {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.class-description:empty {
+  margin: 0
+}
+
+#main {
+  float: right;
+  width: calc(100% - 250px);
+  padding: 10px 20px;
+}
+
+header {
+  display: block
+}
+
+section {
+  display: block;
+  background-color: #fff;
+}
+
+.variation {
+  display: none
+}
+
+.signature-attributes {
+  font-size: 13px;
+  color: #4E4E4E;
+  font-style: italic;
+}
+
+/* Sidebar Navigation Styled to match sub-nav feel */
+nav {
+  float: left;
+  display: block;
+  width: 250px;
+  background: #f8f8f8;
+  border-right: 2px solid #4D7A97;
+  overflow: auto;
+  position: fixed;
+  height: 100%;
+}
+
+.top-nav {
+    background-color: #4D7A97;
+    color: #FFFFFF;
+    float: left;
+    padding: 0;
+    width: 100%;
+    clear: right;
+    min-height: 2.8em;
+    padding-top: 10px;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.top-nav a {
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0 15px;
+    text-transform: uppercase;
+}
+
+.top-nav a:hover {
+    color: #ffe69c; /* Javadoc hover yellow/orange */
+    border-bottom: 2px solid #ffe69c;
+}
+
+nav #nav-search{
+    background-image: url('resources/glass.png');
+    background-size: 13px;
+    background-repeat: no-repeat;
+    background-position: 5px 8px;
+    width: 210px;
+    height: 30px;
+    padding: 5px 10px 5px 25px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+nav.wrap a{
+    word-wrap: break-word;
+}
+
+nav h3 {
+  margin-top: 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 15px 0 10px;
+  padding: 0;
+  color: #2c4557;
+}
+
+nav h3.collapsed_header {
+  cursor: pointer;
+}
+
+nav ul {
+  font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+nav ul a,
+nav ul a:active {
+  font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+  padding: 0;
+  display: block;
+  font-size: 13px;
+  color: #4A6782;
+}
+
+nav a:hover,
+nav a:active {
+  color: #bb7a2a;
+}
+
+.result-highlight {
+    font-weight: bold;
+    background-color: #ffe69c; 
+    color: #000;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+nav > ul {
+  padding: 0 10px;
+}
+
+nav > ul > li > a {
+  color: #F8981D;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+nav ul ul a {
+  color: #000000;
+  border-left: 1px solid #ddd;
+}
+
+nav ul ul a,
+nav ul ul a:active {
+  padding-left: 15px;
+  margin-left: 5px;
+}
+
+nav h2 {
+   font-size: 15px;
+   margin: 10px 0 0 0;
+   padding: 0;
+   font-style: normal;
+}
+
+nav > h2 > a {
+   margin: 10px 0 -10px;
+   color: #F8981D !important;
+}
+
+footer {
+  color: #4E4E4E;
+  margin-left: 250px;
+  display: block;
+  padding: 15px;
+  font-size: 13px;
+  border-top: 1px solid #EEE;
+}
+
+.ancestors {
+  color: #4E4E4E;
+}
+
+.ancestors a {
+   color: #4E4E4E !important;
+}
+
+.clear {
+  clear: both
+}
+
+.important {
+  font-weight: bold;
+  color: #950B02;
+}
+
+.yes-def {
+  text-indent: -1000px
+}
+
+.type-signature {
+  color: #4A6782;
+}
+
+.type-signature:last-child {
+  color: #353833;
+}
+
+.name, .signature {
+  font-family: 'DejaVu Sans Mono', monospace;
+  font-size: 14px;
+}
+
+.signature {
+    color: #353833;
+}
+
+.details {
+  margin-top: 6px;
+  border-left: none;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.details dt {
+   width: auto;
+   float: left;
+   padding-left: 10px;
+   font-weight: bold;
+   color: #4E4E4E;
+}
+
+.details dd {
+   margin-left: 70px;
+   margin-top: 6px;
+   margin-bottom: 6px;
+   font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+}
+
+.details ul { margin: 0; list-style-type: none; }
+.details pre.prettyprint { margin: 0; }
+.details .object-value { padding-top: 0; }
+
+.description {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+}
+
+.code-caption {
+  font-weight: bold;
+  color: #253441;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+  font-style: normal;
+}
+
+/* Adjusted Syntax Highlighting to match standard text */
+.prettyprint {
+  font-size: 14px;
+  overflow: auto;
+  border: 1px solid #d0d9e0;
+}
+
+.prettyprint.source {
+  width: inherit;
+  display: block;
+  background-color: #ffffff;
+  color: #353833;
+}
+
+.prettyprint code {
+  display: block;
+  background-color: #ffffff;
+  color: #353833;
+}
+
+.prettyprint > code {
+  padding: 10px;
+}
+
+.prettyprint .linenums code {
+  padding: 0 15px
+}
+
+.prettyprint .linenums li:first-of-type code {
+  padding-top: 15px
+}
+
+.prettyprint code span.line {
+  display: inline-block
+}
+
+.prettyprint.linenums {
+  padding-left: 50px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prettyprint.linenums ol { padding-left: 0; }
+.prettyprint.linenums li { border-left: 3px #dee3e9 solid; color: green; }
+.prettyprint.linenums li.selected, .prettyprint.linenums li.selected * { background-color: #dee3e9; }
+.prettyprint.linenums li * { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
+.prettyprint.linenums li code:empty:after { content:""; display:inline-block; width:0px; }
+
+/* Tables Styled like Java Summary Tables */
+table {
+  border-spacing: 0;
+  border-left: 1px solid #EEE;
+  border-right: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
+  border-top: none;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  margin: 1em 0;
+  box-shadow: none;
+}
+
+td, th {
+   margin: 0px;
+   text-align: left;
+   vertical-align: top;
+   padding: 8px 3px 3px 7px;
+   display: table-cell;
+   border: none;
+}
+
+thead tr, thead tr {
+   background-color: #dee3e9;
+   font-weight: bold;
+   border-bottom: none;
+}
+
+tbody tr:nth-child(even) { background-color: #FFFFFF; }
+tbody tr:nth-child(odd) { background-color: #EEEEEF; }
+
+.params .type { white-space: nowrap; }
+.params code { white-space: pre; }
+
+.params td, .params .name, .props .name, .name code {
+   color: #353833;
+   font-family: 'DejaVu Sans Mono', monospace;
+   font-size: 13px;
+   font-weight: bold;
+}
+
+.params td.description > p:first-child, .props td.description > p:first-child { margin-top: 0; padding-top: 0; }
+.params td.description > p:last-child, .props td.description > p:last-child { margin-bottom: 0; padding-bottom: 0; }
+
+span.param-type, .params td .param-type, .param-type dd {
+  color: #4A6782;
+  font-family: 'DejaVu Sans Mono', monospace;
+}
+
+.param-type dt, .param-type dd { display: inline-block; }
+.param-type { margin: 14px 0; }
+.disabled { color: #4E4E4E; }
+
+/* Mobile Menu Button - Keeping Docdash logic but recolored */
+.navicon-button {
+  display: none;
+  position: relative;
+  padding: 2.0625rem 1.5rem;
+  transition: 0.25s;
+  cursor: pointer;
+  user-select: none;
+  opacity: .8;
+}
+.navicon-button .navicon:before, .navicon-button .navicon:after { transition: 0.25s; }
+.navicon-button:hover { transition: 0.5s; opacity: 1; }
+.navicon-button:hover .navicon:before, .navicon-button:hover .navicon:after { transition: 0.25s; }
+.navicon-button:hover .navicon:before { top: .825rem; }
+.navicon-button:hover .navicon:after { top: -.825rem; }
+
+.navicon {
+  position: relative;
+  width: 2.5em;
+  height: .3125rem;
+  background: #2c4557;
+  transition: 0.3s;
+  border-radius: 2.5rem;
+}
+.navicon:before, .navicon:after {
+  display: block;
+  content: "";
+  height: .3125rem;
+  width: 2.5rem;
+  background: #2c4557;
+  position: absolute;
+  z-index: -1;
+  transition: 0.3s 0.25s;
+  border-radius: 1rem;
+}
+.navicon:before { top: .625rem; }
+.navicon:after { top: -.625rem; }
+
+.nav-trigger:checked + label:not(.steps) .navicon:before,
+.nav-trigger:checked + label:not(.steps) .navicon:after { top: 0 !important; }
+.nav-trigger:checked + label .navicon:before,
+.nav-trigger:checked + label .navicon:after { transition: 0.5s; }
+.nav-trigger:checked + label { transform: scale(0.75); }
+.nav-trigger:checked + label.plus .navicon,
+.nav-trigger:checked + label.x .navicon { background: transparent; }
+
+.nav-trigger:checked + label.plus .navicon:before,
+.nav-trigger:checked + label.x .navicon:before {
+  transform: rotate(-45deg);
+  background: #2c4557;
+}
+
+.nav-trigger:checked + label.plus .navicon:after,
+.nav-trigger:checked + label.x .navicon:after {
+  transform: rotate(45deg);
+  background: #2c4557;
+}
+
+.nav-trigger:checked + label.plus { transform: scale(0.75) rotate(45deg); }
+.nav-trigger:checked ~ nav { left: 0 !important; }
+.nav-trigger:checked ~ .overlay { display: block; }
+.nav-trigger { position: fixed; top: 0; clip: rect(0, 0, 0, 0); }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: hsla(0, 0%, 0%, 0.5);
+  z-index: 1;
+}
+
+.level-hide { display: none; }
+html[data-search-mode] .level-hide { display: block; }
+
+@media only screen and (max-width: 800px) {
+  body { overflow-x: hidden; }
+
+  nav {
+    background: #4D7A97;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: -250px;
+    z-index: 3;
+    padding: 0 10px;
+    transition: left 0.2s;
+  }
+
+  .navicon-button {
+    display: inline-block;
+    position: fixed;
+    top: 1.5em;
+    right: 0;
+    z-index: 2;
+  }
+
+  #main { width: 100%; padding: 10px; }
+  #main h1.page-title { margin: 1em 0; }
+  #main section { padding: 0; }
+  footer { margin-left: 0; }
+}
+
+[data-type="member"] a::before {
+  content: '#';
+  display: inline-block;
+  margin-left: -14px;
+  margin-right: 5px;
+}
+
+#disqus_thread{ margin-left: 30px; }
