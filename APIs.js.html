@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>APIs.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#formatUUID">formatUUID</a></li><li><a href="global.html#getOPedPlayers">getOPedPlayers</a></li><li><a href="global.html#getPlayerNameFromUUID">getPlayerNameFromUUID</a></li><li><a href="global.html#getPlayerSavedBalanceMethod">getPlayerSavedBalanceMethod</a></li><li><a href="global.html#getPlayerUUIDFromString">getPlayerUUIDFromString</a></li><li><a href="global.html#getPlayersSavedNamesUUIDs">getPlayersSavedNamesUUIDs</a></li><li><a href="global.html#hasSavedDataVar">hasSavedDataVar</a></li><li><a href="global.html#readSavedDataArray">readSavedDataArray</a></li><li><a href="global.html#readSavedDataVar">readSavedDataVar</a></li><li><a href="global.html#removeSavedData">removeSavedData</a></li><li><a href="global.html#saveData">saveData</a></li><li><a href="global.html#savePlayerBalanceMethod">savePlayerBalanceMethod</a></li><li><a href="global.html#unformatUUID">unformatUUID</a></li><li><a href="global.html#updateWorldNamedata">updateWorldNamedata</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">APIs.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var FileImport = Java.type("java.io.File"); //Java file class
+var FilesImport = Java.type("java.nio.file.Files"); //Java files class
+var PathsImport = Java.type("java.nio.file.Paths"); //Java paths class
+var FileWriterImport = Java.type("java.io.FileWriter");
+
+var WrapperNpcAPI = Java.type("noppes.npcs.api.wrapper.WrapperNpcAPI"); //Custom NPC's NpcAPI wrapper class.
+var API = WrapperNpcAPI.Instance(); //Getting the Wrapper of the NpcAPI
+
+load(new FileImport(new FileImport(new FileImport(API.getGlobalDir(),"Scripts"),"APIs"),"Importing APIs.js")); //API's file load
+
+
+/**
+ * 
+ * @param {string} key 
+ * @param {string} value 
+ * @param {string} Filename 
+ * @param {string} directory 
+ */
+function saveData(first, second, source, Dir) {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+    var otherDataDir = new FileImport(dataDir, Dir);
+
+    if (!otherDataDir.exists()) {
+        otherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(otherDataDir, source + ".json");
+
+    if (!file.exists()) {
+        file.createNewFile();
+    }
+
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {
+        print(err);
+    }
+
+    var data;
+    try {
+        if (content &amp;&amp; content.trim().length > 0) {
+            data = JSON.parse(content);
+        } else {
+            data = {};
+        }
+    } catch (err) {
+        data = {};
+    }
+        data[first] = second;
+
+    // --- Write back ---
+    var writer = new FileWriterImport(file);
+    writer.write(JSON.stringify(data, null, 2));
+    writer.close();
+}
+/**
+ * 
+ * @param {string} key 
+ * @param {string} Filename 
+ * @param {string} directory 
+ * @returns {value}
+ */
+function readSavedDataVar(first, source, Dir) {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+    var otherDataDir = new FileImport(dataDir, Dir);
+
+    if (!otherDataDir.exists()) {
+        otherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(otherDataDir, source + ".json");
+
+    if (!file.exists()) {
+        return null;
+    }
+
+    // --- Read file ---
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {
+        // ignore read errors, fallback to empty
+    }
+
+    // --- Parse or initialize ---
+    var data;
+    try {
+        if (content &amp;&amp; content.trim().length > 0) {
+            data = JSON.parse(content);
+        } else {
+            data = {};
+        }
+    } catch (err) {
+        data = {};
+    }
+    return data[first];
+}
+/**
+ * 
+ * @param {string} key 
+ * @param {string} Filename 
+ * @param {string} directory 
+ * @returns {value&lt;Array>}
+ */
+function readSavedDataArray(first, source, Dir) {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+    var anotherDataDir = new FileImport(dataDir, Dir);
+
+    if (!anotherDataDir.exists()) {
+        anotherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(anotherDataDir, source + ".json");
+
+    if (!file.exists()) {
+        return null;
+    }
+
+    // --- Read file ---
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {
+        // ignore read errors, fallback to empty
+    }
+
+    var leaderboard = [];
+
+    for (var name in data.players) {
+        leaderboard.push({
+            name: name,
+            damage: data.players[name]
+        });
+    }
+
+    // --- Sort highest → lowest ---
+    leaderboard.sort(function(a, b) {
+        return b.damage - a.damage;
+    });
+    return leaderboard;
+}
+/**
+ * 
+ * @param {string} key 
+ * @param {string} Filename
+ * @param {string} directory 
+ * @returns {boolean}
+ */
+function hasSavedDataVar(first, source, Dir) {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+    var anotherDataDir = new FileImport(dataDir, Dir);
+
+    if (!anotherDataDir.exists()) {
+        anotherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(anotherDataDir, source + ".json");
+
+    if (!file.exists()) {
+        return false;
+    }
+
+    // --- Read file ---
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {
+        // ignore read errors, fallback to empty
+    }
+
+    // --- Parse or initialize ---
+    var data;
+    try {
+        if (content &amp;&amp; content.trim().length > 0) {
+            data = JSON.parse(content);
+        } else {
+            data = {};
+        }
+    } catch (err) {
+        data = {};
+    }
+    return data[first] !== undefined;
+}
+/**
+ * 
+ * @param {string} MCPlayerName 
+ * @returns {string}
+ */
+function getPlayerUUIDFromString(name) {
+    try {
+        var url = "https://api.mojang.com/users/profiles/minecraft/" + name;
+
+        var con = new java.net.URL(url).openConnection();
+        con.requestMethod = "GET";
+
+        var reader = new java.io.BufferedReader(
+            new java.io.InputStreamReader(con.getInputStream())
+        );
+
+        var response = "";
+        var line;
+
+        while ((line = reader.readLine()) != null) {
+            response += line;
+        }
+
+        reader.close();
+
+        var json = JSON.parse(response);
+
+        return json.id; // UUID string
+    } catch (err) {
+        return null;
+    }
+}
+/**
+ * 
+ * @param {string} PlayerUUID (Without dashes) 
+ * @returns {string}
+ */
+function getPlayerNameFromUUID(uuid) {
+    try {
+        var url = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid;
+
+        var con = new java.net.URL(url).openConnection();
+        con.requestMethod = "GET";
+
+        var reader = new java.io.BufferedReader(
+            new java.io.InputStreamReader(con.getInputStream())
+        );
+
+        var response = "";
+        var line;
+
+        while ((line = reader.readLine()) != null) {
+            response += line;
+        }
+
+        reader.close();
+
+        var json = JSON.parse(response);
+
+        return json.name; // Name string
+    } catch (err) {
+        return null;
+    }
+}
+/**
+ * 
+ * @returns {object&lt;Array>}
+ */
+function getOPedPlayers() {
+    var parentFile = API.getGlobalDir().getParent();
+    var file = new FileImport(parentFile, "ops.json");
+
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {}
+
+    var data;
+    try {
+        if (content &amp;&amp; content.trim().length > 0) {
+            data = JSON.parse(content);
+        } else {
+            data = {};
+        }
+    } catch (err) {
+        data = {};
+    }
+    var opArray = [];
+    if (Array.isArray(data)) {
+        for (var i = 0; i &lt; data.length; i++) {
+            var player = data[i];
+            opArray.push({
+                uuid: player.uuid,
+                name: player.name,
+                level: player.level,
+                bypassesPlayerLimit: player.bypassesPlayerLimit
+            });
+        }
+    } else {
+        print("Error: ops.json does not contain a valid array.");
+    }
+    return opArray;
+}
+/**
+ * 
+ * @param {string} Filename 
+ * @param {string} directory
+ */
+function removeSavedData(Name, dir) {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+    var chosenDir = new FileImport(dataFoldDir, "dir");
+
+    if (!tempDataDir.exists()) {
+        return print("The directory " + dir + " does not exist.");
+    }
+
+    var file = new FileImport(chosenDir, Name + "_TempData.json");
+    if (!file.exists()) {
+        return print("The file " + Name + "_TempData.json does not exist.");
+    }
+    file.delete()
+}
+/**
+ * 
+ * @param {string} PlayerUUID (Without Dashes) 
+ * @returns {string} Return Player UUID with dashes
+ */
+function formatUUID(rawUUID) {
+    return rawUUID.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/, "$1-$2-$3-$4-$5");
+}
+/**
+ * 
+ * @param {string} PlayerUUID (With Dashes)
+ * @returns {string} Return Raw Player UUID
+ */
+function unformatUUID(UUID) {
+    return UUID.replaceAll("-", "");
+}
+/**
+ * 
+ * @returns {object&lt;Array>}
+ */
+function getPlayersSavedNamesUUIDs() {
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+
+    var anotherDataDir = new FileImport(dataDir, "Data");
+    if (!anotherDataDir.exists()) {
+        anotherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
+
+    if (!file.exists()) {
+        file.createNewFile();
+    }
+
+    var content = "";
+    try {
+        content = new java.lang.String(
+            FilesImport.readAllBytes(PathsImport.get(file.getAbsolutePath()))
+        );
+    } catch (err) {}
+
+    var data;
+    try {
+        if (content &amp;&amp; content.trim().length > 0) {
+            data = JSON.parse(content);
+        } else {
+            data = { players: {} };
+        }
+    } catch (err) {
+        data = { players: {} };
+    }
+
+    if (!data.players) {
+        data.players = {};
+    }
+
+    var arrayOfData = [];
+
+    for (var name in data.players) {
+        arrayOfData.push({
+            name: name,
+            uuid: data.players[name]
+        });
+    }
+
+    return arrayOfData;
+}
+/**
+ * Update the global saved names and UUID data.
+ */
+function updateWorldNamedata(){
+    var baseDir = API.getGlobalDir();
+    var dataDir = new FileImport(baseDir, "Data");
+    if (!dataDir.exists()) {
+        dataDir.mkdirs();
+    }
+
+    var anotherDataDir = new FileImport(dataDir, "Data");
+    if (!anotherDataDir.exists()) {
+        anotherDataDir.mkdirs();
+    }
+
+    var file = new FileImport(anotherDataDir, "SavedUUIDsNames.json");
+
+    if (!file.exists()) {
+        file.createNewFile();
+    }
+    var data = { players: {} };
+
+    if (!data) {
+        data.players = {};
+    }
+
+    var arrayOfData = [];
+
+    var playerDataDir = new FileImport(dataDir, "PlayerData");
+    var listFiles = playerDataDir.list();
+    try {   
+        for (var i = 0; i &lt; listFiles.length; i++) {
+            var Filesget = listFiles[i];
+            var eachFile = new FileImport(playerDataDir, Filesget);
+            var UUID = eachFile.getName().replace(".json", "");
+
+            var contentnew = "";
+            try {
+                contentnew = new java.lang.String(
+                    FilesImport.readAllBytes(PathsImport.get(eachFile.getAbsolutePath()))
+                );
+            } catch (err) {}
+
+            var datanew;
+            try {
+                if (contentnew &amp;&amp; contentnew.trim().length > 0) {
+                    datanew = JSON.parse(contentnew);
+                } else {
+                    datanew = {};
+                }
+            } catch (err) {
+                print(err);
+                continue;
+            }
+
+
+            var namep = datanew["name"];
+            if (namep == null || namep == undefined) {
+                print("Couldn't find name in: " + UUID + ".json");
+                continue;
+            }
+            data.players[namep] = UUID;
+        }
+    } catch (err) {
+        return print(err);
+    }
+    var writer = new FileWriterImport(file);
+    writer.write(JSON.stringify(data, null, 2));
+    writer.close();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Wed May 27 2026 21:22:06 GMT-0600 (Mountain Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

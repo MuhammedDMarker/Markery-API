@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>Abilities/IAbilities.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -37,66 +37,65 @@
 
 <div id="main">
     
+    <h1 class="page-title">Abilities/IAbilities.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Create a wave attack around the NPC
+ * @param {object} NPC 
+ */
+function createDamageWave(npc) {
+    var waveRadius = 14;       // How far the damage wave reaches (in blocks)
+    var waveDamage = 70;       // How much damage the wave does (2 damage = 1 full heart)
+    var knockUp = 0.5;        // How high players are knocked into the air by the wave
+    var particleName = "minecraft:cloud"; // The particle used for the wave
 
+    var world = npc.world;
+    var pos = npc.getPos();
 
-    <section class="package">
-        <h3> </h3>		
+    // A. Play a sound effect so the impact feels heavy
+    // playSoundAt(position, sound_name, volume, pitch)
+    world.playSoundAt(pos, "minecraft:entity.generic.explode", 2, 1);
+
+    // B. Create a simple circle of particles
+    // We use a simple loop that goes from 0 to 360 degrees
+    for (var i = 0; i &lt; 360; i += 30) { 
+        var rad = i * (Math.PI / 180); // Convert degrees to math format (radians)
+        
+        // Calculate the edge of the circle based on our waveRadius
+        var x = npc.x + Math.cos(rad) * waveRadius;
+        var z = npc.z + Math.sin(rad) * waveRadius;
+        
+        // Spawn the particle at the calculated edge
+        // spawnParticle(particle, x, y, z, speedX, speedY, speedZ, speed, count)
+        world.spawnParticle(particleName, x, npc.y + 0.1, z, 0, 0, 0, 0.1, 5);
+    }
+
+    // C. Find players to damage
+    // getNearbyEntities(position, distance, type)
+    // Type 1 = Players, Type 2 = NPCs, Type 5 = All Living Mobs
+    var targets = world.getNearbyEntities(pos, waveRadius, 1);
+
+    // D. Loop through everyone we found and hit them
+    for (var j = 0; j &lt; targets.length; j++) {
+        var target = targets[j];
+        
+        // Make sure the NPC doesn't accidentally hit itself!
+        if (target.getName() != npc.getName()) {
+            target.damage(waveDamage);
+            target.setMotionY(knockUp); // Tosses the player up slightly
+        }
+    }
+}</code></pre>
+        </article>
     </section>
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    <section class="readme usertext">
-        <article><h1>Crafttale (Markery) APIs and Methods Documentation</h1>
-<p>Using Custom NPCs scripting for ECMAScript (Also known as JavaScript) and so
-to be able to create or control that requires a lot of work and undertanding.</p>
-<p>The stuff you need to know before start scripting:
-The Javascript that's working from Custom NPCs is working through Nashorn Engine.
-Nashorn Engine is like a bridge between Java classes and Javascript coding. You
-can access and use classes that been loaded and use it methods for your purposes.
-Markery APIs is custom methods that been using classes from mods or even Java
-itself. Though, it's always required to understand those methods and what they
-can do before using them in any server. <strong>And you need to insert the Scripts</strong>
-<strong>folder with all it contain.</strong> It's the primary library for Markery methods.</p>
-<h1>Using The Methods and how to setup the library</h1>
-<p>Markery Library is only available for <strong>Crafftale</strong> server. It's not public to
-all Scripters yet. There will be soon a different version for it but not decided
-yet.</p>
-<p>For <strong>Crafttale</strong> Team, The library already there in the <em>Custom NPCs</em> Folder.
-<em>Custom NPCs</em> folder is in the same directory of world, config, etc. <strong>It's Highly</strong>
-<strong>recommanded not to touch anything without approve!</strong> If you're confused about something
-talk with MR Edip (Marker) for details or support.</p>
-<p><strong>To use the method</strong> you need to import the API wrapper of Custom NPCs (or use it through
-the Custom NPCs event) to get the API of custom NPCs. Then using the API get the
-global Directory (The folder that has Scripts library. Not the world one) and then from
-there you can load the method script to use the methods it contain. Here's an example
-for importing APIs methods:</p>
-<pre class="prettyprint source"><code>var FileImport = Java.type(&quot;java.io.File&quot;); //Java file class
-
-var WrapperNpcAPI = Java.type(&quot;noppes.npcs.api.wrapper.WrapperNpcAPI&quot;); //Custom NPC's NpcAPI wrapper class.
-var API = WrapperNpcAPI.Instance(); //Getting the Wrapper of the NpcAPI
-
-load(new FileImport(API.getGlobalDir(),&quot;Markery.js&quot;)); //API's file load
-
-</code></pre></article>
-    </section>
-
-
 
 
 
